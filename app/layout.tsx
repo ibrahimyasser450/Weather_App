@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/weather2.ico" type="image/x-icon" />{" "}
+        <link rel="icon" href="/weather2.ico" type="image/x-icon" />
         {/* public/weather.ico */}
       </head>
       <body>{children}</body>

@@ -11,7 +11,7 @@ export default function Home() {
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
 
-  const url = `http://api.weatherapi.com/v1/forecast.json?key=8bb336fe21aa44c4804165605243110&q=${location}&days=7&aqi=yes&alerts=yes`;
+  const url = `https://api.weatherapi.com/v1/forecast.json?key=8bb336fe21aa44c4804165605243110&q=${location}&days=7&aqi=yes&alerts=yes`;
 
   const fetchWeatherData = async () => {
     try {
@@ -43,7 +43,7 @@ export default function Home() {
           const { latitude, longitude } = position.coords;
           try {
             const response = await fetch(
-              `http://api.weatherapi.com/v1/forecast.json?key=8bb336fe21aa44c4804165605243110&q=${latitude},${longitude}&days=7&aqi=yes&alerts=yes`
+              `https://api.weatherapi.com/v1/forecast.json?key=8bb336fe21aa44c4804165605243110&q=${latitude},${longitude}&days=7&aqi=yes&alerts=yes`
             );
             if (!response.ok) throw new Error();
             const data = await response.json();
