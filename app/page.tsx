@@ -1,101 +1,114 @@
-import Image from "next/image";
+"use client";
+import React, { useState } from "react";
+
+import Input from "./component/Input";
+import Current from "./component/Current";
+import WeekForecast from "./component/WeekForecast";
+import WeatherDetails from "./component/WeatherDetails";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [data, setData] = useState({});
+  const [location, setLocation] = useState("");
+  const [error, setError] = useState("");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const url = `http://api.weatherapi.com/v1/forecast.json?key=8bb336fe21aa44c4804165605243110&q=${location}&days=7&aqi=yes&alerts=yes`;
+
+  const fetchWeatherData = async () => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error();
+      }
+      const data = await response.json();
+      setData(data);
+      setLocation("");
+      setError("");
+    } catch (error) {
+      setError("City not found");
+      setData({});
+    }
+  };
+
+  const handelSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      fetchWeatherData();
+    }
+  };
+
+  const handleCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          try {
+            const response = await fetch(
+              `http://api.weatherapi.com/v1/forecast.json?key=8bb336fe21aa44c4804165605243110&q=${latitude},${longitude}&days=7&aqi=yes&alerts=yes`
+            );
+            if (!response.ok) throw new Error();
+            const data = await response.json();
+            setData(data);
+            setLocation(data.location.name);
+            setError("");
+          } catch {
+            setError("Location not found");
+          }
+        },
+        () =>
+          setError(
+            "Unable to retrieve location, Please reset location permission to grant access again."
+          )
+      );
+    } else {
+      setError("Geolocation not supported by your browser");
+    }
+  };
+
+  let content;
+  if (Object.keys(data).length === 0 && error === "") {
+    content = (
+      <div className="text-white text-center h-screen mt-[5rem]">
+        <h2 className="text-3xl font-bold mb-4">Welcome to the weather app</h2>
+        <p className="text-xl">Enter a city name to get the weather forecast</p>
+      </div>
+    );
+  } else if (error !== "") {
+    content = (
+      <div className="text-white text-center h-screen mt-[5rem]">
+        <p className="text-3xl font-bold mb-4">City Not Found</p>
+        <p className="text-xl">Enter a valid city</p>
+      </div>
+    );
+  } else {
+    content = (
+      <>
+        <div>
+          <WeekForecast data={data} />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+        <div>
+          <WeatherDetails data={data} />
+        </div>
+      </>
+    );
+  }
+  return (
+    <div className="bg-cover bg-gradient-to-r from-blue-500 to-blue-300 h-fit">
+      <div className="bg-white/25 w-full rounded-lg flex flex-col h-fit">
+        <h1 className=" my-8 text-white rounded-xl italic text-3xl font-bold text-center">
+          Weather App.
+        </h1>
+        {/* INPUT AND LOGO */}
+        <div className="flex flex-col md:flex-row justify-around items-center p-12">
+          <Input
+            handleSearch={handelSearch}
+            setLocation={setLocation}
+            onSearchClick={fetchWeatherData}
+            onCurrentLocationClick={handleCurrentLocation}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          {Object.keys(data).length > 0 && <Current data={data} />}
+        </div>
+        {content}
+      </div>
     </div>
   );
 }
