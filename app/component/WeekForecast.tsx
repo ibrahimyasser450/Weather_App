@@ -25,8 +25,8 @@ interface WeekForecastProps {
 export default function WeekForecast({ data }: WeekForecastProps) {
   return (
     <div className="p-12">
-      <h1 className="mb-6 text-3xl font-bold text-white after:content-[''] after:block after:w-40 after:h-1 after:bg-gray-500 after:mt-2 sm:after:ml-20">
-        {data?.location?.name} Weather for 7 days
+      <h1 className="mb-6 text-3xl font-bold text-white after:content-[''] after:block after:w-28 after:h-1 after:bg-gray-500 after:mt-2 sm:after:ml-20">
+        {data?.location?.name} Weather days
       </h1>
       <div className="grid grid-cols-2 sm:grid-col-2 md:grid-cols-3 lg:grid-cols-7 gap-8 w-full">
         {data?.forecast?.forecastday?.map((day, index) => (

@@ -40,7 +40,7 @@ export default function Current({ data }: CurrentProps) {
       <p className="text-base font-semibold ml-4">({currentDate})</p>
       <div className="flex items-center flex-row justify-between">
         <div className=" test-xl font-bold">
-          <p>Temp: {data?.current?.temp_c?.toFixed(1) || "--"}°C</p>
+          <p>Temp: {data?.current?.temp_c?.toFixed() || "--"}°C</p>
           <p>Wind: {data?.current?.wind_mph?.toFixed(1) || "--"} M/S</p>
           <p>Humidity: {data?.current?.humidity || "--"}%</p>
         </div>
