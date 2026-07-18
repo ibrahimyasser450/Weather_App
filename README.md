@@ -1,33 +1,170 @@
-## Weather Project: 
-Search for your city to get weather details.
+# 🌤️ Weather App
 
-Use current location to get weather details.
+A modern weather application built with **Next.js**, **React**, **TypeScript**, and **Tailwind CSS**. Users can search for any city worldwide or use their current location to view real-time weather conditions, a 7-day forecast, and detailed weather information.
 
-View 7-day weather for your city.
+---
 
-View weather details.
+## ✨ Features
 
-## Getting Started
+- 🔍 Search weather by city name
+- 📍 Detect and display weather for the user's current location
+- 🌡️ Current temperature and weather condition
+- 📅 7-day weather forecast
+- 💨 Wind speed and wind direction
+- 💧 Humidity information
+- 🌅 Sunrise & Sunset times
+- 🌡️ Feels like temperature
+- 🌬️ Air pressure
+- 👀 Visibility
+- 📱 Fully responsive design
+- ⚡ Fast performance with Next.js
 
-First, run the development server:
+---
+
+## 🛠️ Built With
+
+- **Next.js 15**
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS**
+- **WeatherAPI**
+- **React Icons**
+
+---
+
+## 📂 Project Structure
+
+```
+weather_project/
+│
+├── app/
+│   ├── component/
+│   │   ├── Current.jsx
+│   │   ├── Input.jsx
+│   │   ├── WeatherDetails.jsx
+│   │   └── WeekForecast.jsx
+│   │
+│   ├── utils/
+│   │   └── currentDate.js
+│   │
+│   ├── page.jsx
+│   └── globals.css
+│
+├── public/
+├── package.json
+└── README.md
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+https://github.com/ibrahimyasser450/Weather_App.git
+```
+
+### 2. Navigate into the project
+
+```bash
+cd weather_project
+```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Run the development server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result, you can enter your city or use current location to get the weather details.
-You can start editing the page by modifying `page.tsx`.
+Open your browser and visit:
 
+```
+http://localhost:3000
+```
 
-## technologies 
-1- HTML
+---
 
-2- CSS / Tailwind CSS
+## 🔑 API
 
-3- JavaScript / TypeScript
+This project uses the **WeatherAPI** to retrieve weather information.
 
-4- React
+Create a free account and get your API key:
 
-5- Next.js
+https://www.weatherapi.com/
 
-6- Weather API
+---
+
+## 📋 Usage
+
+### Search by City
+
+- Enter a city name.
+- Press **Enter** or click **Search**.
+- The application will display:
+  - Current weather
+  - Weather details
+  - 7-day forecast
+
+### Current Location
+
+Click **Current Location** to allow the browser to access your location and automatically display your local weather.
+
+> **Note:** Location accuracy depends on your browser and device.
+
+---
+
+## 📱 Responsive Design
+
+The application is optimized for:
+
+- 💻 Desktop
+- 💻 Laptop
+- 📱 Mobile
+- 📲 Tablet
+
+---
+
+## 📦 Dependencies
+
+- Next.js
+- React
+- React DOM
+- TypeScript
+- Tailwind CSS
+- React Icons
+
+---
+
+## 🔮 Future Improvements
+
+- 🌙 Dark / Light mode
+- 🌍 Multiple language support
+- ⭐ Favorite cities
+- 📍 Interactive weather map
+- 🕒 Hourly forecast
+- 📊 Weather charts
+- 🌦️ Weather alerts notifications
+- 💾 Local storage for recent searches
+
+---
+
+## 👨‍💻 Author
+
+**Ibrahim Yasser**
+
+Software Engineer
+
+GitHub: https://github.com/ibrahimyasser450
+
+---
+
+## ⭐ Support
+
+If you found this project useful, consider giving it a **⭐ Star** on GitHub.
